@@ -1,0 +1,5 @@
+---
+- hosts: my_yc_tst_srv
+  tasks:
+  - name: Enable up-down-arrow browsing throw commands history
+    echo ''; echo '#Enable up-down-arrow browse from history'; echo '"\e[A": history-search-backward'; echo '"\e[B": history-search-forward' >> /etc/inputrc

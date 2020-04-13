@@ -3,3 +3,4 @@
   tasks:
   - name: Enable up-down-arrow browsing throw commands history
   - shell: echo ''; echo '#Enable up-down-arrow browse from history'; echo '"\e[A": history-search-backward'; echo '"\e[B": history-search-forward' >> /etc/inputrc
+  

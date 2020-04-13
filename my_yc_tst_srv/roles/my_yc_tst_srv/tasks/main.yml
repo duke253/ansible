@@ -8,8 +8,8 @@
   - shell: echo '#Enable up-down-arrow browse from history' >> /etc/inputrc
 
   - name: Enable up-down-arrow browsing throw commands history - add line #1
-  - shell: echo '"\e[A": history-search-backward' >> /etc/inputrc
+  - shell: echo '"\e[A"'': history-search-backward' >> /etc/inputrc
 
   - name: Enable up-down-arrow browsing throw commands history - add line #2
-  - shell: echo '"\e[B": history-search-forward' >> /etc/inputrc
+  - shell: echo '"\e[B"'': history-search-forward' >> /etc/inputrc
 

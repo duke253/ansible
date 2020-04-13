@@ -1,3 +1,4 @@
+---
 - name: Enable up-down-arrow browsing throw commands history - add empty line
 - shell: echo '' >> /etc/inputrc;
 

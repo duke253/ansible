@@ -59,6 +59,9 @@
           #Enable up-down-arrow browse from history
           "\e[A": history-search-backward
           "\e[B": history-search-forward
+  rescue:
+    - debug:
+        msg: 'I caught an error while executing Configure other OS settings block'
 
 
 

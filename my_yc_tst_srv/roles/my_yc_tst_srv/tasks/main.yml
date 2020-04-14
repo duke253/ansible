@@ -8,11 +8,12 @@
 
     - name: Install necessary packages
       yum:
-        name: "{{ nessecary_packages }}"
+        name: "{{ min_packages_epel }}"
         state: present
   rescue:
     - debug:
         msg: 'I caught an error while executing Repositories and packages block'
+  tags: [min_packages_epel]
 
 - name: Time and date
   block:
@@ -24,9 +25,11 @@
       systemd:
         name: crond.service
         state: restarted
+      tags: [restart_crond]
   rescue:
     - debug:
         msg: 'I caught an error while executing Time and date block'
+  tags: [set_timezone_msk]
 
 - name: Firewalld
   block:
@@ -49,6 +52,7 @@
   rescue:
     - debug:
         msg: 'I caught an error while executing Firewalld block'
+  tags: [min_conf_firewalld]
 
 - name: Configure other OS settings
   block:
@@ -62,6 +66,7 @@
   rescue:
     - debug:
         msg: 'I caught an error while executing Configure other OS settings block'
+  tags: [min_conf_os]
 
 
 

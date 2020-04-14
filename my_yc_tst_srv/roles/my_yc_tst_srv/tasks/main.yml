@@ -3,7 +3,7 @@
   blockinfile:
     path: /etc/inputrc
     block: |
-    #Enable up-down-arrow browse from history
-    "\e[A": history-search-backward
-    "\e[B": history-search-forward
+      #Enable up-down-arrow browse from history
+      "\e[A": history-search-backward
+      "\e[B": history-search-forward
 

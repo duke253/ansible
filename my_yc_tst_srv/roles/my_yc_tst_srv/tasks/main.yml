@@ -13,23 +13,25 @@
   timezone:
     name: Europe/Moscow
 
-- name: Enable firewalld
-  systemd:
-    name: firewalld.service
-    enabled: yes
-    masked: no
+- name: Firewalld
+  block:
+    - name: Enable firewalld
+      systemd:
+        name: firewalld.service
+        enabled: yes
+        masked: no
 
-- name: Start firewalld
-  systemd:
-    name: firewalld.service
-    state: started
+    - name: Start firewalld
+      systemd:
+        name: firewalld.service
+        state: started
 
-- name: Configure firewalld rules
-  firewalld:
-    service: "{{ firewalld_services }}"
-    permanent: yes
-    state: enabled
-    register: result
+    - name: Configure firewalld rules
+      firewalld:
+        service: "{{ firewalld_services }}"
+        permanent: yes
+        state: enabled
+  ignore_errors: yes
 
 - name: Enable up-down-arrow browsing throw commands history
   blockinfile:

@@ -26,7 +26,7 @@
 
 - name: Configure firewalld rules
   firewalld:
-    service:  "{{ firewalld_services }}"
+    service: "{{ firewalld_services }}"
     permanent: yes
     state: enabled
 

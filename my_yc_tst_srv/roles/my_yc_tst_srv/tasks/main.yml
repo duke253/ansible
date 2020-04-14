@@ -6,4 +6,4 @@
 - name: Enable up-down-arrow browsing throw commands history - add empty line
   shell: echo 'TEST' >> /etc/inputrc;
   become: yes
-  when: check_lines_in_inputrc_egrep !=''
+  when: check_lines_in_inputrc_egrep != ''

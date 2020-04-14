@@ -4,6 +4,11 @@
     name: epel-release
     state: present
 
+- name: install necessary packages
+  yum:
+    name: "{{ nessecary_packages }}"
+    state: present
+
 - name: Enable up-down-arrow browsing throw commands history
   blockinfile:
     path: /etc/inputrc

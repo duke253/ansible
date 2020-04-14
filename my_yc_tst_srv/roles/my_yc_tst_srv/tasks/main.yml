@@ -46,9 +46,12 @@
 
     - name: Configure firewalld rules
       firewalld:
-        service: {{ firewalld_services }}
+        service: "{{ items }}"
         permanent: yes
+        immediate: yes
         state: enabled
+      loop:
+        "{{ firewalld_services }}"
   rescue:
     - debug:
         msg: 'I caught an error while executing Firewalld block'

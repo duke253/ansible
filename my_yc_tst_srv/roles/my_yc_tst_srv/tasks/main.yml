@@ -1,6 +1,9 @@
 ---
-- name: TEST - Enable up-down-arrow browsing throw commands history
-  lineinfile:
+- name: Enable up-down-arrow browsing throw commands history
+  blockinfile:
     path: /etc/inputrc
-    line: '#Enable up-down-arrow browse from history'
+    block: |
+    #Enable up-down-arrow browse from history
+    "\e[A": history-search-backward
+    "\e[B": history-search-forward
 

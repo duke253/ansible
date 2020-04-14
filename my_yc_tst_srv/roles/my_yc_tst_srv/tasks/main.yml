@@ -50,13 +50,15 @@
     - debug:
         msg: 'I caught an error while executing Firewalld block'
 
-- name: Enable up-down-arrow browsing throw commands history
-  blockinfile:
-    path: /etc/inputrc
-    content: |
-      #Enable up-down-arrow browse from history
-      "\e[A": history-search-backward
-      "\e[B": history-search-forward
+- name: Configure other OS settings
+  block:
+    - name: Enable up-down-arrow browsing throw commands history
+      blockinfile:
+        path: /etc/inputrc
+        content: |
+          #Enable up-down-arrow browse from history
+          "\e[A": history-search-backward
+          "\e[B": history-search-forward
 
 
 

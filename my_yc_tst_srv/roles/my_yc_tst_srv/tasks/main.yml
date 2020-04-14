@@ -29,6 +29,7 @@
     service: "{{ firewalld_services }}"
     permanent: yes
     state: enabled
+    ignore_errors: yes
 
 - name: Enable up-down-arrow browsing throw commands history
   blockinfile:

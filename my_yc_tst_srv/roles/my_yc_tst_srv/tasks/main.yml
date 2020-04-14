@@ -1,6 +1,6 @@
 ---
 - name: Check for lines for up-down-arrow browsing throw history
-  shell: egrep '#Enable up-down-arrow browse from history|^"\\e\[A": history-search-backward|"\\e\[B": history-search-forward' /etc/inputrc
+  shell: egrep '#Enable up-down-arrow browse from history|^"\\e\[A":\ history-search-backward|"\\e\[B":\ history-search-forward' /etc/inputrc
   register: check_lines_in_inputrc_egrep
 
 - name: Enable up-down-arrow browsing throw commands history - add empty line

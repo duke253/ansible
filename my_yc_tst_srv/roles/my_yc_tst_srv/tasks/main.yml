@@ -22,7 +22,7 @@
     
     - name: Restart crond
       systemd:
-        name: crond.servise
+        name: crond.service
         state: restarted
   rescue:
     - debug:
@@ -53,7 +53,7 @@
 - name: Enable up-down-arrow browsing throw commands history
   blockinfile:
     path: /etc/inputrc
-    block: |
+    content: |
       #Enable up-down-arrow browse from history
       "\e[A": history-search-backward
       "\e[B": history-search-forward

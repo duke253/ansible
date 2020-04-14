@@ -13,7 +13,7 @@
   timezone:
     name: Europe/Moscow
 
-- name: Firewalld
+- name: Firewalld setup
   block:
     - name: Enable firewalld
       systemd:
@@ -31,7 +31,9 @@
         service: "{{ firewalld_services }}"
         permanent: yes
         state: enabled
-  ignore_errors: yes
+  rescue:
+    - debug:
+        msg: 'I caught an error while executing Firewalld setup block'
 
 - name: Enable up-down-arrow browsing throw commands history
   blockinfile:

@@ -3,4 +3,5 @@
   lineinfile:
     path: /etc/inputrc
     line: '#Enable up-down-arrow browse from history'
+    became: yes
 

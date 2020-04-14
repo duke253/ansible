@@ -46,7 +46,7 @@
 
     - name: Configure firewalld rules
       firewalld:
-        service: "{{ items }}"
+        service: "{{ item }}"
         permanent: yes
         immediate: yes
         state: enabled

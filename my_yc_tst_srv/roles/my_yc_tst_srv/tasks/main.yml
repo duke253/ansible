@@ -97,8 +97,10 @@
           if test -f /sys/kernel/mm/transparent_hugepage/defrag; then
           echo never > /sys/kernel/mm/transparent_hugepage/defrag
           fi
+    
+    - debud:
+        register: disable_thp_result
 
-  register: disable_thp_result
   rescue:
     - debug:
         msg: 'I caught an error while executing Disable transparent huge pages block'
@@ -110,8 +112,10 @@
     - name: Disable selinux
       selinux:
         state: disabled
+    
+    - debug:
+        register: disable_selinux_result
 
-  register: disable_selinux_result
   rescue:
     - debug:
         msg: 'I caught an error while executing Disable selinux block'

@@ -108,5 +108,5 @@
   rescue:
     - debug:
         msg: 'I caught an error while executing Disable transparent huge pages and selinux block'
-  tags: [disable_thp]  
+  tags: [disable_thp_selinux]
 

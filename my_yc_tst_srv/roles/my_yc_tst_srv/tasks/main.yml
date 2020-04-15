@@ -63,7 +63,7 @@
         msg: 'I caught an error while executing Firewalld block'
   tags: [min_conf_firewalld]
 
-- name: Configure other OS settings
+- name: Configure up-down-arrow browsing and vm.svappines
   block:
    
     - name: Enable up-down-arrow browsing throw commands history
@@ -73,7 +73,20 @@
           #Enable up-down-arrow browse from history
           "\e[A": history-search-backward
           "\e[B": history-search-forward
-    
+
+    - name: Configure vm.swappiness
+      lineinfile:
+        path: /etc/sysctl.conf
+        line: vm.swappiness = 1
+
+  rescue:
+    - debug:
+        msg: 'I caught an error while executing Configure other OS settings block'
+  tags: [hist_browse_and_swappiness]
+
+- name: Disable transparent huge pages
+  block:
+
     - name: Disable transparent huge pages
       blockinfile:
         path: /etc/rc.local
@@ -84,28 +97,32 @@
           if test -f /sys/kernel/mm/transparent_hugepage/defrag; then
           echo never > /sys/kernel/mm/transparent_hugepage/defrag
           fi
-        register: disable_thp_result
-    
-    - name: Configure vm.swappiness
-      lineinfile:
-        path: /etc/sysctl.conf
-        line: vm.swappiness = 1
-    
+
+  register: disable_thp_result
+  rescue:
+    - debug:
+        msg: 'I caught an error while executing Disable transparent huge pages block'
+  tags: [disable_thp]  
+
+- name: Disable selinux
+  block:
+
     - name: Disable selinux
       selinux:
         state: disabled
-        register: disable_selinux_result
 
+  register: disable_selinux_result
   rescue:
     - debug:
-        msg: 'I caught an error while executing Configure other OS settings block'
-  tags: [min_conf_os]
+        msg: 'I caught an error while executing Disable selinux block'
+  tags: [disable_selinux]
 
 - name: Apply settings - reboot
   block:
 
     - name: Reboot
       reboot:
+  
   when: disable_thp_result.changed or disable_selinux_result.changed
   rescue:
     - debug:

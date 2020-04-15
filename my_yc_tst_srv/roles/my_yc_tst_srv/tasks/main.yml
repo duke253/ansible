@@ -1,6 +1,7 @@
 ---
 - name: Repositories and packages
   block:
+    
     - name: Install epel-release
       yum:
         name: epel-release
@@ -10,6 +11,7 @@
       yum:
         name: "{{ min_packages_epel }}"
         state: present
+  
   rescue:
     - debug:
         msg: 'I caught an error while executing Repositories and packages block'
@@ -17,6 +19,7 @@
 
 - name: Time and date
   block:
+    
     - name: Set timezone
       timezone:
         name: Europe/Moscow
@@ -26,6 +29,7 @@
         name: crond.service
         state: restarted
       tags: [restart_crond]
+  
   rescue:
     - debug:
         msg: 'I caught an error while executing Time and date block'
@@ -33,6 +37,7 @@
 
 - name: Firewalld
   block:
+   
     - name: Enable firewalld
       systemd:
         name: firewalld.service
@@ -52,6 +57,7 @@
         state: enabled
       loop:
         "{{ firewalld_services }}"
+ 
   rescue:
     - debug:
         msg: 'I caught an error while executing Firewalld block'
@@ -59,6 +65,7 @@
 
 - name: Configure other OS settings
   block:
+   
     - name: Enable up-down-arrow browsing throw commands history
       blockinfile:
         path: /etc/inputrc
@@ -66,10 +73,41 @@
           #Enable up-down-arrow browse from history
           "\e[A": history-search-backward
           "\e[B": history-search-forward
+    
+    - name: Disable transparent huge pages
+      blockinfile:
+        path: /etc/rc.local
+        content: |
+          if test -f /sys/kernel/mm/transparent_hugepage/enabled; then
+          echo never > /sys/kernel/mm/transparent_hugepage/enabled
+          fi
+          if test -f /sys/kernel/mm/transparent_hugepage/defrag; then
+          echo never > /sys/kernel/mm/transparent_hugepage/defrag
+          fi
+        register: disable_thp_result
+    
+    - name: Configure vm.swappiness
+      lineinfile:
+        path: /etc/sysctl.conf
+        line: vm.swappiness = 1
+    
+    - name: Disable selinux
+      selinux:
+        state: disabled
+        register: disable_selinux_result
+
   rescue:
     - debug:
         msg: 'I caught an error while executing Configure other OS settings block'
   tags: [min_conf_os]
 
+- name: Apply settings - reboot
+  block:
 
-
+    - name: Reboot
+      reboot:
+  when: disable_thp_result.changed or disable_selinux_result.changed
+  rescue:
+    - debug:
+        msg: 'I caught an error while executing Reboot block'
+  tags: [reboot]

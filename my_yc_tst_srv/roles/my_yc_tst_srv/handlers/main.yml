@@ -1,0 +1,10 @@
+---
+handlers:
+  - name: restart_system
+    reboot:
+
+  - name: restart_crond
+    systemd:
+        name: crond.service
+        state: restarted
+    

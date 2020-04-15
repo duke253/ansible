@@ -23,12 +23,9 @@
     - name: Set timezone
       timezone:
         name: Europe/Moscow
-    
-    - name: Restart crond
-      systemd:
-        name: crond.service
-        state: restarted
-      tags: [restart_crond]
+      
+      notify:
+        - restart_crond
   
   rescue:
     - debug:
@@ -84,7 +81,7 @@
         msg: 'I caught an error while executing Configure other OS settings block'
   tags: [hist_browse_and_swappiness]
 
-- name: Disable transparent huge pages
+- name: Disable transparent huge pages and selinux
   block:
 
     - name: Disable transparent huge pages
@@ -97,38 +94,19 @@
           if test -f /sys/kernel/mm/transparent_hugepage/defrag; then
           echo never > /sys/kernel/mm/transparent_hugepage/defrag
           fi
-    
-    - debud:
-        register: disable_thp_result
-
-  rescue:
-    - debug:
-        msg: 'I caught an error while executing Disable transparent huge pages block'
-  tags: [disable_thp]  
-
-- name: Disable selinux
-  block:
+      
+      notify:
+        - restart_system
 
     - name: Disable selinux
       selinux:
         state: disabled
-    
-    - debug:
-        register: disable_selinux_result
+
+      notify:
+        - restart_system
 
   rescue:
     - debug:
-        msg: 'I caught an error while executing Disable selinux block'
-  tags: [disable_selinux]
+        msg: 'I caught an error while executing Disable transparent huge pages and selinux block'
+  tags: [disable_thp]  
 
-- name: Apply settings - reboot
-  block:
-
-    - name: Reboot
-      reboot:
-  
-  when: disable_thp_result.changed or disable_selinux_result.changed
-  rescue:
-    - debug:
-        msg: 'I caught an error while executing Reboot block'
-  tags: [reboot]

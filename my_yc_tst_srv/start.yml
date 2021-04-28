@@ -1,5 +1,0 @@
----
-- hosts: my_yc_tst_srv
-  roles:
-    - { role: my_yc_tst_srv }
-

@@ -86,6 +86,20 @@
 
     - name: Install postgres 10 repo
       yum:
-        name: epel-release
+        name: https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm
         state: present
 
+    - name: Install postgresql10-server
+      yum:
+        name: postgresql10-server
+        state: present
+
+    - name: Install postgresql10
+      yum:
+        name: postgresql10
+        state: present
+
+  rescue:
+    - debug:
+        msg: 'I caught an error while executing Install PostgreSQL 10 block'
+  tags: [install_postgresql10]

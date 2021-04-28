@@ -1,0 +1,5 @@
+---
+- hosts: centos7_pg_db_srv
+  roles:
+    - { role: centos7_pg_db_srv }
+

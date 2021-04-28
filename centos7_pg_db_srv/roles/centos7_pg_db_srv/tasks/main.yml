@@ -1,0 +1,91 @@
+---
+- name: Time and date
+  block:
+
+    - name: Set timezone
+      timezone:
+        name: Europe/Moscow
+
+      notify:
+        - restart_crond
+
+  rescue:
+    - debug:
+        msg: 'I caught an error while executing Time and date block'
+  tags: [set_timezone_msk]
+
+- name: Repositories and packages
+  block:
+    
+    - name: Install epel-release
+      yum:
+        name: epel-release
+        state: present
+
+    - name: Install updates
+      yum:
+        name: '*'
+        state: latest
+
+    - name: Install necessary packages
+      yum:
+        name: "{{ min_packages_epel }}"
+        state: present
+  
+  rescue:
+    - debug:
+        msg: 'I caught an error while executing Repositories and packages block'
+  tags: [min_packages_epel]
+
+- name: Firewalld
+  block:
+   
+    - name: Enable firewalld
+      systemd:
+        name: firewalld.service
+        enabled: yes
+        masked: no
+
+    - name: Start firewalld
+      systemd:
+        name: firewalld.service
+        state: started
+
+    - name: Configure firewalld rules
+      firewalld:
+        service: "{{ item }}"
+        permanent: yes
+        immediate: yes
+        state: enabled
+      loop:
+        "{{ firewalld_services }}"
+ 
+  rescue:
+    - debug:
+        msg: 'I caught an error while executing Firewalld block'
+  tags: [min_conf_firewalld]
+
+- name: Configure up-down-arrow browsing and vm.svappines
+  block:
+   
+    - name: Enable up-down-arrow browsing throw commands history
+      blockinfile:
+        path: /etc/inputrc
+        content: |
+          #Enable up-down-arrow browse from history
+          "\e[A": history-search-backward
+          "\e[B": history-search-forward
+
+  rescue:
+    - debug:
+        msg: 'I caught an error while executing Configure other OS settings block'
+  tags: [bash_hist_browsing]
+
+- name: Install PostgreSQL 10
+  block:
+
+    - name: Install postgres 10 repo
+      yum:
+        name: epel-release
+        state: present
+

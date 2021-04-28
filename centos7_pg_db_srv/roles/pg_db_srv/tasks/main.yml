@@ -1,0 +1,112 @@
+---
+- name: Repositories and packages
+  block:
+    
+    - name: Install epel-release
+      yum:
+        name: epel-release
+        state: present
+
+    - name: Install necessary packages
+      yum:
+        name: "{{ min_packages_epel }}"
+        state: present
+  
+  rescue:
+    - debug:
+        msg: 'I caught an error while executing Repositories and packages block'
+  tags: [min_packages_epel]
+
+- name: Time and date
+  block:
+    
+    - name: Set timezone
+      timezone:
+        name: Europe/Moscow
+      
+      notify:
+        - restart_crond
+  
+  rescue:
+    - debug:
+        msg: 'I caught an error while executing Time and date block'
+  tags: [set_timezone_msk]
+
+- name: Firewalld
+  block:
+   
+    - name: Enable firewalld
+      systemd:
+        name: firewalld.service
+        enabled: yes
+        masked: no
+
+    - name: Start firewalld
+      systemd:
+        name: firewalld.service
+        state: started
+
+    - name: Configure firewalld rules
+      firewalld:
+        service: "{{ item }}"
+        permanent: yes
+        immediate: yes
+        state: enabled
+      loop:
+        "{{ firewalld_services }}"
+ 
+  rescue:
+    - debug:
+        msg: 'I caught an error while executing Firewalld block'
+  tags: [min_conf_firewalld]
+
+- name: Configure up-down-arrow browsing and vm.svappines
+  block:
+   
+    - name: Enable up-down-arrow browsing throw commands history
+      blockinfile:
+        path: /etc/inputrc
+        content: |
+          #Enable up-down-arrow browse from history
+          "\e[A": history-search-backward
+          "\e[B": history-search-forward
+
+    - name: Configure vm.swappiness
+      lineinfile:
+        path: /etc/sysctl.conf
+        line: vm.swappiness = 1
+
+  rescue:
+    - debug:
+        msg: 'I caught an error while executing Configure other OS settings block'
+  tags: [hist_browse_and_swappiness]
+
+- name: Disable transparent huge pages and selinux
+  block:
+
+    - name: Disable transparent huge pages
+      blockinfile:
+        path: /etc/rc.local
+        content: |
+          if test -f /sys/kernel/mm/transparent_hugepage/enabled; then
+          echo never > /sys/kernel/mm/transparent_hugepage/enabled
+          fi
+          if test -f /sys/kernel/mm/transparent_hugepage/defrag; then
+          echo never > /sys/kernel/mm/transparent_hugepage/defrag
+          fi
+      
+      notify:
+        - restart_system
+
+    - name: Disable selinux
+      selinux:
+        state: disabled
+
+      notify:
+        - restart_system
+
+  rescue:
+    - debug:
+        msg: 'I caught an error while executing Disable transparent huge pages and selinux block'
+  tags: [disable_thp_selinux]
+

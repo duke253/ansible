@@ -1,0 +1,12 @@
+---
+# This task install common packages.
+
+- name: Install common packages
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+   - ufw
+   - curl
+   - nmon
+   - htop

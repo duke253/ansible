@@ -1,0 +1,7 @@
+---
+- name: Common tasks
+  hosts: all
+
+  roles:
+    - install_common_packages
+    - set_timezone_msk

@@ -1,0 +1,2 @@
+[setup_srv_debian]
+setup-srv-deb11-01 ansible_port=2222 ansible_host=127.0.0.1 ansible_become=yes

@@ -1,0 +1,9 @@
+---
+# This task install tftpd-hpa.
+
+- name: Install tftpd-hpa
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+   - tftpd-hpa

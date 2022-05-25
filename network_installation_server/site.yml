@@ -1,0 +1,8 @@
+---
+- name: Common tasks
+  hosts: all
+
+  roles:
+    - common
+    - network_installation_server
+

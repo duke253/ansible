@@ -1,0 +1,9 @@
+---
+# This task install pxelinux.
+
+- name: Install pxelinux
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+   - pxelinux

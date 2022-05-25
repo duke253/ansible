@@ -1,0 +1,9 @@
+---
+# This task install syslinux.
+
+- name: Install syslinux
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+   - syslinux

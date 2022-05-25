@@ -1,0 +1,5 @@
+---
+ - include_tasks: install_pxelinux.yml
+ - include_tasks: install_syslinux.yml
+ - include_tasks: install_tftpd.yml
+ - include_tasks: install_isc-dhcp-server.yml

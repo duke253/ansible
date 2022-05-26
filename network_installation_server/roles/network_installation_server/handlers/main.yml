@@ -3,13 +3,3 @@
   systemd:
     name: isc-dhcp-server.service
     state: restarted
-
-- name: stop_isc-dhcp-server
-  systemd:
-    name: isc-dhcp-server.service
-    state: stopped
-
-- name: start_isc-dhcp-server
-  systemd:
-    name: isc-dhcp-server.service
-    state: started

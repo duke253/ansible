@@ -1,0 +1,17 @@
+ui menu.c32
+PROMPT 0
+
+MENU TITLE PXE Boot menu
+TIMEOUT 50
+DEFAULT local
+
+LABEL local
+    MENU LABEL Boot from local drive
+    kernel chain.c32
+    append hd0
+
+# Astra Linux CE Orel
+LABEL netinstall
+    MENU LABEL Start Astra Linux CE net install
+    kernel orel/linux
+    append initrd=orel/initrd.gz modprobe.blacklist=evbug auto=true priority=critical debian-installer/locale=en_US console-keymaps-at/keymap=ru hostname={{ workstation_hostname }} domain={{ network_domain }} astra-license/license=true url=tftp://{{ ansible_default_ipv4.address }}/orel/preseed.cfg interface=auto netcfg/dhcp_timeout=60

@@ -1,0 +1,110 @@
+---
+# This task create and populate directories for network installation.
+
+- name: Create directory for OS ISO
+  file:
+    path: /srv/iso
+    state: directory
+    mode: '0755'
+
+- name: Create directory for TFTP repo
+  file:
+    path: /srv/tftp/orel/
+    state: directory
+    owner: root
+    group: nogroup
+    mode: '0755'
+
+- name: Create directory for pxelinux conf
+  file:
+    path: /srv/tftp/pxelinux.cfg
+    state: directory
+    owner: root
+    group: nogroup
+    mode: '0755'
+
+- name: Copy pxelinux.0
+  copy:
+    src: /usr/lib/PXELINUX/pxelinux.0
+    dest: /srv/tftp/
+    owner: root
+    group: nogroup
+    mode: '0755'
+    remote_src: yes
+
+- name: Copy syslinux libriaries
+  copy:
+    src: /usr/lib/syslinux/modules/bios/{{ item }}
+    dest: /srv/tftp/
+    owner: root
+    group: nogroup
+    mode: '0755'
+    remote_src: yes
+  with_items:
+  - chain.c32
+  - ldlinux.c32
+  - libcom32.c32
+  - libutil.c32
+  - menu.c32
+
+- name: Check existing of ISO
+  stat:
+    path: /srv/iso/{{ orel_iso }}
+  register: iso_stat_result
+
+- name: Download Orel ISO
+  get_url:
+    url: "{{ url_to_orel_iso }}"
+    dest: /srv/iso/
+    mode: '0755'
+  when: iso_stat_result.stat.exists == False
+
+- name: Copy linux & initrd.gz from ISO to /srv/tftp/orel/
+  iso_extract:
+    image: /srv/iso/{{ orel_iso }}
+    dest: /srv/tftp/orel/
+    files:
+    - netinst/linux
+    - netinst/initrd.gz
+
+- name: Copy default boot configuration file
+  template:
+    src: default
+    dest: /srv/tftp/pxelinux.cfg/default
+
+- name: Set owner and permissions on default boot configuration file
+  file:
+    path: /srv/tftp/pxelinux.cfg/default
+    owner: root
+    group: nogroup
+    mode: '0755'
+
+- name: Check existing of grub boot loader config
+  stat:
+    path: /srv/tftp/debian-installer/amd64/grub/grub.cfg
+  register: grubcfg_stat_result
+
+- name: Extract archive with grub boot loader
+  unarchive:
+    src: netinst.tar.gz
+    dest: /srv/tftp
+  when: grubcfg_stat_result.stat.exists == False
+
+- name: Remove default grub config
+  file:
+    path: /srv/tftp/debian-installer/amd64/grub/grub.cfg
+    state: absent
+  when: grubcfg_stat_result.stat.exists == True
+
+- name: Copy default grub config
+  template:
+    src: grub.cfg
+    dest: /srv/tftp/debian-installer/amd64/grub/grub.cfg
+
+- name: Set owner and permissions on /srv/tftp
+  file:
+    path: /srv/tftp
+    owner: root
+    group: nogroup
+    mode: '0755'
+    recurse: yes

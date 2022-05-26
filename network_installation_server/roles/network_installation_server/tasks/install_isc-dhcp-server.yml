@@ -7,16 +7,19 @@
     state: present
   with_items:
    - isc-dhcp-server
-  notify: stop_isc-dhcp-server
 
 - name: Set current network interface in /etc/default/isc-dhcp-server
   template:
     src: isc-dhcp-server
     dest: /etc/default/isc-dhcp-server
 
-- name: Copying dhcpd.conf configuration file
+- name: Copy dhcpd.conf configuration file
   template:
     src: dhcpd.conf
     dest: /etc/dhcp/dhcpd.conf
-  notify: start_isc-dhcp-server
+  notify: restart_isc-dhcp-server
 
+- name: Start isc-dhcp-server, if not started
+  ansible.builtin.service:
+    name: isc-dhcp-server.service
+    state: started

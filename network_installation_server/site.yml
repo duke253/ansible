@@ -4,5 +4,5 @@
 
   roles:
     - common
+    - repo
     - network_installation_server
-

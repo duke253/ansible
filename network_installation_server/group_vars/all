@@ -9,4 +9,6 @@ dhcp_broadcast_address: 10.0.2.255
 dhcp_routers: 10.0.2.1
 url_to_orel_iso: http://dl.astralinux.ru/astra/stable/orel/iso/orel-stable.iso
 orel_iso: orel-stable.iso
-workstation_hostname: rename-me
+temp_hostname: rename-me
+hostname_frst_part: usr-nb-
+hostname_scnd_part: gen1-

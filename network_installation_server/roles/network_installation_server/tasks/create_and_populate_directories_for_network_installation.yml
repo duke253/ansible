@@ -101,6 +101,11 @@
     src: grub.cfg
     dest: /srv/tftp/debian-installer/amd64/grub/grub.cfg
 
+- name: Copy preseed.cfg
+  template:
+    src: preseed_orel.cfg
+    dest: /srv/tftp/orel/preseed.cfg
+
 - name: Set owner and permissions on /srv/tftp
   file:
     path: /srv/tftp
@@ -108,3 +113,7 @@
     group: nogroup
     mode: '0755'
     recurse: yes
+
+- name: Restart services
+  command: echo "Restart services"
+  notify: "restart services"

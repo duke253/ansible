@@ -3,3 +3,10 @@
   systemd:
     name: isc-dhcp-server.service
     state: restarted
+  listen: "restart services"
+
+- name: restart_tftpd-hpa
+  systemd:
+    name: tftpd-hpa.service
+    state: restarted
+  listen: "restart services"

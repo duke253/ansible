@@ -1,33 +1,6 @@
 ---
 # This task create repo, install & configure Apache2.
 
-- name: Create repo dir
-  file:
-    path: /srv/repo/orel/
-    state: directory
-    owner: apache
-    group: apache
-    mode: '0755'
-
-- name: Check existing of local repo
-  stat:
-    path: /srv/repo/orel/repository/conf/distributions
-  register: repo_stat_result
-
-- name: Download packages from remote repo
-  shell: rsync --delete -aqLz rsync://dl.astralinux.ru/astra/astra/stable/2.12_x86-64/repository /srv/repo/orel
-  args:
-    warn: no
-  when: repo_stat_result.stat.exists == False
-
-- name: Set owner and permissions on /srv/repo
-  file:
-    path: /srv/repo
-    owner: apache
-    group: apache
-    mode: '0755'
-    recurse: yes
-
 - name: Install Apache2
   apt:
     name: "{{ item }}"
@@ -35,14 +8,68 @@
   with_items:
    - apache2
 
+- name: Create repo dir
+  file:
+    path: /srv/repo/orel/
+    state: directory
+    owner: www-data
+    group: www-data
+    mode: '0755'
+
+#  REPO FROM ISO
+- name: Check existing of directory for mount OS ISO
+  stat:
+    path: /mnt/cdrom
+  register: mnt_cdrom_stat_result
+
+- name: Create directory for mount OS ISO
+  file:
+    path: /mnt/cdrom
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+  when: mnt_cdrom_stat_result.stat.exists == False
+
+- name: Mount OS ISO
+  mount:
+    path: /mnt/cdrom
+    src: /srv/iso/{{ orel_iso }}
+    fstype: iso9660
+    opts: ro,noauto
+    state: present
+
+- name: Check existing of extracted files from OS ISO
+  stat:
+    path: /srv/repo/orel/astra.ico
+  register: iso_repo_stat_result
+
+- name: Copy content from ISO to /srv/repo/orel
+  shell: cp -a /mnt/cdrom/* /srv/repo/orel
+  when: iso_repo_stat_result.stat.exists == False
+
+#  FULL REPO
+#- name: Check existing of local FULL repo
+#  stat:
+#    path: /srv/repo/orel/repository/conf/distributions
+#  register: full_repo_stat_result
+
+#- name: Download packages from remote repo (FULL)
+#  shell: rsync --delete -aqLz rsync://dl.astralinux.ru/astra/astra/stable/2.12_x86-64/repository /srv/repo/orel
+#  args:
+#    warn: no
+#  when: full_repo_stat_result.stat.exists == False
+
+- name: Set owner and permissions on /srv/repo
+  shell: chmod -R 755 /srv/repo && chown -R www-data:www-data /srv/repo
+
 - name: Create symbolic link to repo
   file:
     src: /srv/repo
-    dest: /var/www/html/
-    path: /srv/repo/orel/
+    dest: /var/www/html/repo
     state: link
-    owner: apache
-    group: apache
+    owner: www-data
+    group: www-data
     mode: '0755'
 
 - name: Remove Apache2 default configuration file

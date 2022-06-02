@@ -47,19 +47,19 @@
   - libutil.c32
   - menu.c32
 
-- name: Check existing of ISO
+- name: Check existing of OS ISO
   stat:
     path: /srv/iso/{{ orel_iso }}
   register: iso_stat_result
 
-- name: Download Orel ISO
+- name: Download OS ISO
   get_url:
     url: "{{ url_to_orel_iso }}"
     dest: /srv/iso/
     mode: '0755'
   when: iso_stat_result.stat.exists == False
 
-- name: Copy linux & initrd.gz from ISO to /srv/tftp/orel/
+- name: Copy linux & initrd.gz from OS ISO to /srv/tftp/orel/
   iso_extract:
     image: /srv/iso/{{ orel_iso }}
     dest: /srv/tftp/orel/

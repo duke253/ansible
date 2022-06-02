@@ -19,6 +19,11 @@
     dest: /etc/dhcp/dhcpd.conf
   notify: restart_isc-dhcp-server
 
+- name: Clear addresses leases
+  file:
+    path: /var/lib/dhcp/dhcpd.leases
+    state: absent
+
 - name: Start isc-dhcp-server, if not started
   ansible.builtin.service:
     name: isc-dhcp-server.service

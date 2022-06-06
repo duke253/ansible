@@ -12,7 +12,23 @@ orel_iso: orel-stable.iso
 temp_hostname: rename-me
 hostname_frst_part: usr-nb-
 hostname_scnd_part: gen1-
+root_password_md5_hash: $1$veytmIrx$HgB0WjOZ9cyqBg/8stZNu0
+user_password_md5_hash: $1$h/H9pqyO$Th87M43oatgGUhOttclB00
+disk_device_name: sda
+vg_name: astra_vg
+crypto_passphrase: 12345678
+boot_partition_size: 1024
+swap_partition_size: 1024
+root_partition_min_size: 8192
+root_partition_size: 17920
+boot_partition_fs_type: ext4
+root_partition_fs_type: ext4
+
+# Возможные варианты ядер linux-4.15-generic,linux-4.15-hardened,linux-5.10-generic,linux-5.10-hardened,linux-5.4-generic,linux-5.4-hardened
+
+linux_kernel: linux-5.10-hardened
+
 machines_by_mac:
 # EXAMPLE - { mac: ['60:eb:69:e0:36:e1'], hostname: test, ip: 10.2.0.240 }
-  - { mac: 08:00:27:37:77:23, hostname: nomvru1 }
-  - { mac: 08:00:27:49:02:15, hostname: nomvru2 }
+  - { mac: 08:00:27:D3:97:5B, hostname: nomvru1 }
+  - { mac: 08:00:27:05:D4:A9, hostname: nomvru2 }

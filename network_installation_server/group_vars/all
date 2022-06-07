@@ -1,3 +1,4 @@
+# Parameters for dhcp-server
 network_domain: astranet.tst
 domain_name_server_1: 77.88.8.1
 domain_name_server_2: 77.88.8.8
@@ -7,13 +8,19 @@ dhcp_range_start: 10.0.2.51
 dhcp_range_finish: 10.0.2.199
 dhcp_broadcast_address: 10.0.2.255
 dhcp_routers: 10.0.2.1
+
+# OS image iso URL and file name
 url_to_orel_iso: http://dl.astralinux.ru/astra/stable/orel/iso/orel-stable.iso
 orel_iso: orel-stable.iso
+
+# Temporary hostname
 temp_hostname: rename-me
+
+# Parameters for hostname generator (by MAC-address)
 hostname_frst_part: usr-nb-
 hostname_scnd_part: gen1-
-root_password_md5_hash: $1$veytmIrx$HgB0WjOZ9cyqBg/8stZNu0
-user_password_md5_hash: $1$h/H9pqyO$Th87M43oatgGUhOttclB00
+
+# Partitioning
 disk_device_name: sda
 vg_name: astra_vg
 crypto_passphrase: 12345678
@@ -24,11 +31,24 @@ root_partition_size: 17920
 boot_partition_fs_type: ext4
 root_partition_fs_type: ext4
 
-# Возможные варианты ядер linux-4.15-generic,linux-4.15-hardened,linux-5.10-generic,linux-5.10-hardened,linux-5.4-generic,linux-5.4-hardened
+# Root password (use "openssl passwd -1" for MD5 password hash)
+root_password_md5_hash: $1$veytmIrx$HgB0WjOZ9cyqBg/8stZNu0
 
+# User login and password (use "openssl passwd -1" for MD5 password hash)
+user_login: locadmin
+user_password_md5_hash: $1$h/H9pqyO$Th87M43oatgGUhOttclB00
+
+# GRUB user and password (use "grub-mkpasswd-pbkdf2" for pbkdf2 password hash)
+grub_user: sugrub
+grub_password:  grub.pbkdf2.sha512.10000.912B6874161843CAAA9538E3350670D8BB63064A75821EB101007296594D7FA2EFC34AECD251A2B73E2A3DD0C03B620874EF91878193CC29AD3AA8E2EA18C3F3.DF58E53FD296AF90B0202991BDADDAD771298E184A0C21CDB973D202C359E6AAF54877360CBD5516D8DF732E2D208195F285925E8E9D723B9E4AEC20E3A77181
+
+# Kernel selection
+# Possible kernels linux-4.15-generic,linux-4.15-hardened,linux-5.10-generic,linux-5.10-hardened,linux-5.4-generic,linux-5.4-hardened
 linux_kernel: linux-5.10-hardened
 
+# List of target machines MAC-addresses and hostnames
 machines_by_mac:
 # EXAMPLE - { mac: ['60:eb:69:e0:36:e1'], hostname: test, ip: 10.2.0.240 }
-  - { mac: 08:00:27:D3:97:5B, hostname: nomvru1 }
-  - { mac: 08:00:27:05:D4:A9, hostname: nomvru2 }
+  - { mac: 08:00:27:D5:EB:B6, hostname: nomvru1 }
+  - { mac: 08:00:27:9B:91:87, hostname: nomvru2 }
+  - { mac: 08:00:27:8D:A3:35, hostname: nomvru3 }

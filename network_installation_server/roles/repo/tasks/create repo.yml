@@ -8,13 +8,35 @@
   with_items:
    - apache2
 
-- name: Create repo dir
+#- name: Create repo dir
+#  file:
+#    path: /srv/repo/orel/
+#    state: directory
+#    owner: www-data
+#    group: www-data
+#    mode: '0755'
+
+- name: Create repo dirs
   file:
-    path: /srv/repo/orel/
+    path: "{{ item }}"
     state: directory
     owner: www-data
     group: www-data
     mode: '0755'
+  with_items:
+   - /srv/repo/orel
+   - /srv/repo/extra/r7-office
+
+- name: Check existing of R7 Office package
+  stat:
+    path: /srv/repo/extra/r7-office/r7-office.deb
+  register: r7_office_stat_result
+
+- name: Copy R7 Office package
+  copy:
+    src: /home/duke/Yandex.Disk/temp/r7-office.deb
+    dest: /srv/repo/extra/r7-office/r7-office.deb
+  when: r7_office_stat_result.stat.exists == False
 
 #  REPO FROM ISO
 - name: Check existing of directory for mount OS ISO

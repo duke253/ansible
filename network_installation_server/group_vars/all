@@ -49,6 +49,6 @@ linux_kernel: linux-5.10-hardened
 # List of target machines MAC-addresses and hostnames
 machines_by_mac:
 # EXAMPLE - { mac: 60:eb:69:e0:36:e1, hostname: test, ip: 10.2.0.240 }
-  - { mac: 08:00:27:A0:DA:DF, hostname: nomvru1 }
+  - { mac: 08:00:27:63:9A:8A, hostname: nomvru1 }
   - { mac: 08:00:27:8E:07:76, hostname: nomvru2 }
   - { mac: 08:00:27:8D:A3:35, hostname: nomvru3 }

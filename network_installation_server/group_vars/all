@@ -24,12 +24,14 @@ hostname_scnd_part: gen1-
 disk_device_name: sda
 vg_name: astra_vg
 crypto_passphrase: 12345678
+boot_efi_partition_size: 512
 boot_partition_size: 1024
 swap_partition_size: 1024
 root_partition_min_size: 8192
 root_partition_size: 17920
 boot_partition_fs_type: ext4
 root_partition_fs_type: ext4
+boot_efi_partition_fs_type: fat32
 
 # Root password (use "openssl passwd -1" for MD5 password hash)
 root_password_md5_hash: $1$veytmIrx$HgB0WjOZ9cyqBg/8stZNu0
@@ -49,6 +51,6 @@ linux_kernel: linux-5.10-hardened
 # List of target machines MAC-addresses and hostnames
 machines_by_mac:
 # EXAMPLE - { mac: 60:eb:69:e0:36:e1, hostname: test, ip: 10.2.0.240 }
-  - { mac: 08:00:27:63:9A:8A, hostname: nomvru1 }
-  - { mac: 08:00:27:8E:07:76, hostname: nomvru2 }
+  - { mac: 08:00:27:A1:14:FE, hostname: nomvru1 }
+  - { mac: 08:00:27:04:2C:9E, hostname: nomvru2 }
   - { mac: 08:00:27:8D:A3:35, hostname: nomvru3 }

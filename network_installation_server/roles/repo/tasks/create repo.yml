@@ -23,6 +23,8 @@
    - /srv/repo/extra/yandex-browser
    - /srv/repo/extra/yandex-disk
    - /srv/repo/extra/ms-teams
+   - /srv/repo/extra/rtadmin
+   - /srv/repo/extra/librtpkcs11ecp
 
 - name: Check existing of Crypto Pro CSP package
   stat:
@@ -53,6 +55,16 @@
   stat:
     path: /srv/repo/extra/ms-teams/{{ ms_teams }}
   register: ms_teams_stat_result
+
+- name: Check existing of rtadmin package
+  stat:
+    path: /srv/repo/extra/rtadmin/{{ rtadmin }}
+  register: rtadmin_stat_result
+
+- name: Check existing of librtpkcs11ecp package
+  stat:
+    path: /srv/repo/extra/librtpkcs11ecp/{{ librtpkcs11ecp }}
+  register: librtpkcs11ecp_stat_result
 
 - name: Copy Crypto Pro CSP package
   copy:
@@ -89,6 +101,18 @@
     src: "{{ extra_packages_src_path + ms_teams }}"
     dest: /srv/repo/extra/ms-teams/{{ ms_teams }}
   when: ms_teams_stat_result.stat.exists == False
+
+- name: Copy rtadmin package
+  copy:
+    src: "{{ extra_packages_src_path + rtadmin }}"
+    dest: /srv/repo/extra/rtadmin/{{ rtadmin }}
+  when: rtadmin_stat_result.stat.exists == False
+
+- name: Copy librtpkcs11ecp package
+  copy:
+    src: "{{ extra_packages_src_path + librtpkcs11ecp }}"
+    dest: /srv/repo/extra/librtpkcs11ecp/{{ librtpkcs11ecp }}
+  when: librtpkcs11ecp_stat_result.stat.exists == False
 
 #  REPO FROM ISO
 - name: Check existing of directory for mount OS ISO

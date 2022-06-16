@@ -58,10 +58,11 @@ litoria_desktop: litoria_desktop_2.7.11_astra.tar.gz
 crypto_pro_csp: crypto-pro-csp-5.0.deb.tgz
 rtadmin: rtadmin
 librtpkcs11ecp: librtpkcs11ecp_2.3.3.0-1_amd64.deb
+citrix_client: icaclient_22.5.0.16_amd64.deb
 
 # List of target machines MAC-addresses and hostnames
 machines_by_mac:
 # EXAMPLE - { mac: 60:eb:69:e0:36:e1, hostname: test, ip: 10.2.0.240 }
-  - { mac: 08:00:27:4F:7B:C9, hostname: nomvru1 }
+  - { mac: 08:00:27:FB:EC:C4, hostname: nomvru1 }
   - { mac: 08:00:27:45:18:36, hostname: nomvru2 }
   - { mac: 08:00:27:8D:A3:35, hostname: nomvru3 }

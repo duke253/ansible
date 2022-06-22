@@ -20,6 +20,9 @@ temp_hostname: rename-me
 hostname_frst_part: usr-nb-
 hostname_scnd_part: gen1-
 
+# Samba workgroup
+samba_workgroup: astranet
+
 # Partitioning
 disk_device_name: sda
 vg_name: astra_vg
@@ -63,6 +66,6 @@ citrix_client: icaclient_22.5.0.16_amd64.deb
 # List of target machines MAC-addresses and hostnames
 machines_by_mac:
 # EXAMPLE - { mac: 60:eb:69:e0:36:e1, hostname: test, ip: 10.2.0.240 }
-  - { mac: 08:00:27:FB:EC:C4, hostname: nomvru1 }
+  - { mac: 08:00:27:5C:6E:60, hostname: nomvru1 }
   - { mac: 08:00:27:F2:8E:97, hostname: nomvru2 }
   - { mac: 08:00:27:8D:A3:35, hostname: nomvru3 }

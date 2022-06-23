@@ -20,7 +20,6 @@
    - /srv/repo/extra/crypto_pro_csp
    - /srv/repo/extra/litoria-desktop
    - /srv/repo/extra/r7-office
-   - /srv/repo/extra/yandex-browser
    - /srv/repo/extra/yandex-disk
    - /srv/repo/extra/ms-teams
    - /srv/repo/extra/rtadmin
@@ -41,11 +40,6 @@
   stat:
     path: /srv/repo/extra/r7-office/{{ r7_office }}
   register: r7_office_stat_result
-
-- name: Check existing of yandex browser package
-  stat:
-    path: /srv/repo/extra/yandex-browser/{{ yandex_browser }}
-  register: yandex_browser_stat_result
 
 - name: Check existing of yandex disk package
   stat:
@@ -89,12 +83,6 @@
     src: "{{ extra_packages_src_path + r7_office }}"
     dest: /srv/repo/extra/r7-office/{{ r7_office }}
   when: r7_office_stat_result.stat.exists == False
-
-- name: Copy yandex browser package
-  copy:
-    src: "{{ extra_packages_src_path + yandex_browser }}"
-    dest: /srv/repo/extra/yandex-browser/{{ yandex_browser }}
-  when: yandex_browser_stat_result.stat.exists == False
 
 - name: Copy yandex disk package
   copy:

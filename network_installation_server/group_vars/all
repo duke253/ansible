@@ -54,7 +54,6 @@ linux_kernel: linux-5.10-hardened
 # Extra packages
 extra_packages_src_path: /home/duke/Yandex.Disk/temp/
 r7_office: r7-office.deb
-yandex_browser: yandex-browser.deb
 yandex_disk: yandex-disk.deb
 ms_teams: ms-teams.deb
 litoria_desktop: litoria_desktop_2.7.11_astra.tar.gz
@@ -66,6 +65,6 @@ citrix_client: icaclient_22.5.0.16_amd64.deb
 # List of target machines MAC-addresses and hostnames
 machines_by_mac:
 # EXAMPLE - { mac: 60:eb:69:e0:36:e1, hostname: test, ip: 10.2.0.240 }
-  - { mac: 08:00:27:5C:6E:60, hostname: nomvru1 }
+  - { mac: 08:00:27:DA:AF:02, hostname: nomvru1 }
   - { mac: 08:00:27:F2:8E:97, hostname: nomvru2 }
   - { mac: 08:00:27:8D:A3:35, hostname: nomvru3 }

@@ -23,6 +23,9 @@ hostname_scnd_part: gen1-
 # Samba workgroup
 samba_workgroup: astranet
 
+# Wireless wep key
+wireless_wep: 1234567890
+
 # Partitioning
 disk_device_name: sda
 vg_name: astra_vg

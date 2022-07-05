@@ -33,4 +33,4 @@
     src: /dev/mapper/vg_dsk_1-lv_dsk_1
     fstype: ext4
     opts: rw,nosuid,noexec
-    state: present
+    state: mounted

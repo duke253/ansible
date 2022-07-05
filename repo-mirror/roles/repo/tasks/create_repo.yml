@@ -17,7 +17,7 @@
     group: apt-mirror
     mode: '0755'
   with_items:
-   - /srv/repo/orel
+   - /srv/repo/orel/mirror/download.astralinux.ru
 
 - name: Add user apt-mirror to group www-data
   user: name=www-data

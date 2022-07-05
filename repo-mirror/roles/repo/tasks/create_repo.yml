@@ -32,6 +32,18 @@
     src: mirror.list
     dest: /etc/apt/mirror.list
 
+- name: Copy postmirror.sh script from apt-mirrror default dir
+  template:
+    src: /var/spool/apt-mirror/var/postmirror.sh
+    dest: /srv/repo/orel/postmirror.sh
+    remote_src: yes
+
+- name: Copy clean.sh script from apt-mirrror default dir
+  template:
+    src: /var/spool/apt-mirror/var/clean.sh
+    dest: /srv/repo/orel/clean.sh
+    remote_src: yes
+
 - name: Create symbolic link to repo
   file:
     src: /srv/repo/orel/mirror/download.astralinux.ru

@@ -45,7 +45,7 @@
 #  when: full_repo_stat_result.stat.exists == False
 
 - name: Set owner and permissions on /srv/repo
-  shell: chmod -R 755 /srv/repo && chown -R www-data:www-data /srv/repo
+  shell: chmod -R 775 /srv/repo && chown -R www-data:www-data /srv/repo
 
 - name: Create symbolic link to repo
   file:

@@ -10,4 +10,5 @@
    - curl
    - htop
    - tree
+   - lvm2
 

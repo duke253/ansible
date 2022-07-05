@@ -32,21 +32,6 @@
     src: mirror.list
     dest: /etc/apt/mirror.list
 
-#  FULL REPO
-#- name: Check existing of local FULL repo
-#  stat:
-#    path: /srv/repo/orel/repository/conf/distributions
-#  register: full_repo_stat_result
-
-#- name: Download packages from remote repo (FULL)
-#  shell: rsync --delete -aqLz rsync://dl.astralinux.ru/astra/astra/stable/2.12_x86-64/repository /srv/repo/orel
-#  args:
-#    warn: no
-#  when: full_repo_stat_result.stat.exists == False
-
-- name: Set owner and permissions on /srv/repo
-  shell: chmod -R 755 /srv/repo && chown -R apt-mirror:apt-mirror /srv/repo
-
 - name: Create symbolic link to repo
   file:
     src: /srv/repo
@@ -55,6 +40,9 @@
     owner: www-data
     group: www-data
     mode: '0755'
+
+- name: Set owner and permissions on /srv/repo
+  shell: chmod -R 755 /srv/repo && chown -R apt-mirror:apt-mirror /srv/repo
 
 - name: Remove Apache2 default configuration file
   file:

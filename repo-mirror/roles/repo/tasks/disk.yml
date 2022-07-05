@@ -25,7 +25,7 @@
 - name: Create ext4 filesystem on target logical volume
   filesystem:
     fstype: ext4
-    dev: /dev/vg_dsk_1-lv_dsk_1
+    dev: /dev/mapper/vg_dsk_1-lv_dsk_1
 
 - name: Mount created filesystem
   mount:

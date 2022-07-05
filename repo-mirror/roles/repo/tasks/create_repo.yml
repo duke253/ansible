@@ -13,15 +13,15 @@
   file:
     path: "{{ item }}"
     state: directory
-    owner: www-data
-    group: www-data
-    mode: '0775'
+    owner: apt-mirror
+    group: apt-mirror
+    mode: '0755'
   with_items:
    - /srv/repo/orel
 
 - name: Add user apt-mirror to group www-data
-  user: name=apt-mirror
-        groups=www-data
+  user: name=www-data
+        groups=apt-mirror
         append=yes
 
 - name: Edit crontab for user apt-mirror

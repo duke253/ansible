@@ -18,6 +18,7 @@
     mode: '0755'
   with_items:
    - /srv/repo/orel/mirror/download.astralinux.ru
+   - /srv/repo/orel/var
 
 - name: Add user apt-mirror to group www-data
   user: name=www-data
@@ -35,13 +36,13 @@
 - name: Copy postmirror.sh script from apt-mirrror default dir
   template:
     src: /var/spool/apt-mirror/var/postmirror.sh
-    dest: /srv/repo/orel/postmirror.sh
+    dest: /srv/repo/orel/var/postmirror.sh
     remote_src: yes
 
 - name: Copy clean.sh script from apt-mirrror default dir
   template:
     src: /var/spool/apt-mirror/var/clean.sh
-    dest: /srv/repo/orel/clean.sh
+    dest: /srv/repo/orel/var/clean.sh
     remote_src: yes
 
 - name: Create symbolic link to repo

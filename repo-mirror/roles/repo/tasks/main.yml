@@ -1,3 +1,2 @@
 ---
- - include_tasks: disk.yml
  - include_tasks: create_repo.yml

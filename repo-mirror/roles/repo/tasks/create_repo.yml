@@ -68,6 +68,6 @@
   notify: restart_apache2
 
 - name: Start Apache2, if not started
-  ansible.builtin.service:
+  service:
     name: apache2.service
     state: started

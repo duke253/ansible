@@ -1,0 +1,9 @@
+---
+# This task set timezone Europe/Moscow.
+
+- name: Set timezone Europe/Moscow
+  timezone:
+    name: Europe/Moscow
+
+  notify:
+     - restart_crond

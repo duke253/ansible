@@ -1,0 +1,7 @@
+---
+- name: Common tasks
+  hosts: all
+
+  roles:
+    - common
+    - repo

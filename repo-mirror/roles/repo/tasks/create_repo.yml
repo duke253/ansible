@@ -34,7 +34,7 @@
 
 - name: Create symbolic link to repo
   file:
-    src: /srv/repo
+    src: /srv/repo/orel/mirror/download.astralinux.ru
     dest: /var/www/html/repo
     state: link
     owner: www-data

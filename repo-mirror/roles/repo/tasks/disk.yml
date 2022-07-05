@@ -20,7 +20,7 @@
   lvol:
     vg: vg_dsk_1
     lv: lv_dsk_1
-    size: 100g
+    size: 102200
 
 - name: Create ext4 filesystem on target logical volume
   filesystem:

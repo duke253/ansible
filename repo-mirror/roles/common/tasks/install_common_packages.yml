@@ -11,4 +11,4 @@
    - htop
    - tree
    - lvm2
-
+   - dnsutils

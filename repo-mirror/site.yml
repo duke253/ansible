@@ -1,7 +1,8 @@
 ---
-- name: Common tasks
+- name: repo-mirror-server
   hosts: all
 
   roles:
     - common
+    - disks
     - repo

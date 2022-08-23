@@ -1,0 +1,2 @@
+---
+ - include_tasks: resize_disk.yml

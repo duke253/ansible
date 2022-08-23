@@ -4,11 +4,6 @@
 - name: Resize /dev/vdb physical volume
   shell: pvresize /dev/vdb
 
-#- name: Resize vg_dsk_1 volume group
-#  lvg:
-#    pvs: /dev/vdb
-#    vg: vg_dsk_1
-
 - name: Resize lv_dsk_1 logical volume and FS
   lvol:
     vg: vg_dsk_1

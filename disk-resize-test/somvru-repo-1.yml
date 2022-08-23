@@ -3,4 +3,5 @@
   hosts: somvru-repo-1
 
   roles:
-    - disks
+    #- disks
+    - disks_resize

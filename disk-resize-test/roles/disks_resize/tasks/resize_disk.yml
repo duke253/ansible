@@ -5,7 +5,7 @@
   lvg:
     pvs: /dev/vdb
     vg: vg_dsk_1
-#    pvresize: yes
+    pvresize: yes
 
 - name: Resize lv_dsk_1 logical volume and FS
   lvol:
@@ -13,3 +13,11 @@
     lv: lv_dsk_1
     size: 100%PVS
     resizefs: true
+
+- name: Mount filesystem
+  mount:
+    path: /srv
+    src: /dev/mapper/vg_dsk_1-lv_dsk_1
+    fstype: ext4
+    opts: rw,nosuid,noexec
+    state: mounted

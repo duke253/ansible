@@ -1,0 +1,2 @@
+[somvru-repo-1]
+somvru-repo-1 ansible_host=10.0.30.10 ansible_become=yes

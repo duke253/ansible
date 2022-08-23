@@ -1,0 +1,36 @@
+---
+# This task create logical volume and mount it
+
+- name: Create target dir
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+  with_items:
+   - /srv
+
+- name: Create vg_dsk_1 volume group
+  lvg:
+    pvs: /dev/vdb
+    vg: vg_dsk_1
+
+- name: Create lv_dsk_1 logical volume
+  lvol:
+    vg: vg_dsk_1
+    lv: lv_dsk_1
+    size: 5000
+
+- name: Create ext4 filesystem on target logical volume
+  filesystem:
+    fstype: ext4
+    dev: /dev/mapper/vg_dsk_1-lv_dsk_1
+
+- name: Mount created filesystem
+  mount:
+    path: /srv
+    src: /dev/mapper/vg_dsk_1-lv_dsk_1
+    fstype: ext4
+    opts: rw,nosuid,noexec
+    state: mounted

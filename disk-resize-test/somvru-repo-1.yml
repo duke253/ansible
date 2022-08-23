@@ -1,0 +1,6 @@
+---
+- name: somvru-repo-1
+  hosts: somvru-repo-1
+
+  roles:
+    - disks
